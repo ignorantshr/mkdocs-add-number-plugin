@@ -5,21 +5,20 @@ with open("README.md", "r") as fh:
 
 setup(
     name='mkdocs-add-number-plugin',
-    version='1.1.0',
+    version='1.2.0',
     description='MkDocs Plugin to automatically number the headings (h1-h6) in each markdown page.',
     long_description=long_description,
     long_description_content_type="text/markdown",
     keywords='mkdocs index add-number plugin',
     url='https://github.com/shihr/mkdocs-add-number-plugin.git',
-    author='shihr',
+    author='ignorantshr',
     author_email='shrshraa@outlook.com',
     license='MIT',
     python_requires='>=3.5',
     install_requires=[
-        'mkdocs>=1.0.4'
+        'mkdocs>=1.1'
     ],
     classifiers=[
-        'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
         'Intended Audience :: Information Technology',
         'License :: OSI Approved :: MIT License',

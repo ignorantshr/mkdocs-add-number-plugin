@@ -13,6 +13,10 @@ def flatten(nav):
     """
     pages = []
     for i in nav:
+        # file
+        if type(i) == str:
+            pages.append(i)
+            continue
         item = list(i.values())[0]
         if type(item) == list:
             pages += flatten(item)

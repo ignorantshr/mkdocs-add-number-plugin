@@ -2,6 +2,7 @@ import re
 from typing import List
 from collections import OrderedDict
 
+
 def headings(lines: List[str]):
     """Findings lines that are markdown headings 
     
@@ -23,7 +24,8 @@ def headings(lines: List[str]):
         n += 1
         
     return heading_lines
-    
+
+
 def heading_depth(line):
     """Returns depth of heading indent
     

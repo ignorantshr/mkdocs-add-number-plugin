@@ -10,10 +10,10 @@
 
 ## Setup
 
-Install the plugin using pip:
+Install the plugin using pip3:
 
 ```bash
-pip install mkdocs-add-number-plugin
+pip3 install mkdocs-add-number-plugin
 ```
 
 Next, add the following lines to your `mkdocs.yml`:
@@ -34,7 +34,6 @@ Example of multiple options set in the `mkdocs.yml` file:
 plugins:
     - search
     - add-number:
-        increment_pages: True
         strict_mode: False
         order: 1
         excludes: 
@@ -48,7 +47,6 @@ plugins:
 
 ## Options
 
-- `increment_pages`: When set to `True` (default), will increment the chapter number of each page sequentially.
 - `strict_mode`:
    - When set to `False` (default), orders the title numbers in your HTML page sequentially
    - When set to `True` it will follow the headings order strictly. You must start writing documents from h1, and cannot skip headings (such as `# title1\n### title2\n`).
@@ -97,6 +95,47 @@ plugins:
 
 一个mkdocs插件：为你的每个页面的标题（h1~h6）自动编号。**这只影响你的html渲染结果，并不影响markdown文档本身！**
 
+## 安装
+有以下两种方法：
+### 从源码构建安装
+克隆此项目到你的计算机上，然后执行以下命令：
+
+```shell
+cd mkdocs-add-number-plugin
+mkdir wheels
+cd wheels
+# if you have installed the plugin
+# pip3 uninstall mkdocs-add-number-plugin -y
+pip3 wheel ..
+pip3 install mkdocs_add_number_plugin-*-py3-none-any.whl
+```
+
+### 使用 pip 安装
+
+```shell
+# if you have installed the plugin
+# pip3 uninstall mkdocs-add-number-plugin -y
+pip3 install mkdocs-add-number-plugin
+```
+
+## 使用
+
+在`mkdocs.yml`文件中的`plugins`选项添加此插件：
+
+```yaml
+plugins:
+    - search
+    - add-number:
+        strict_mode: False
+        order: 1
+        excludes:
+        	- sql/
+        	- command/rsync
+        includes:
+        	- sql/MySQL
+```
+
+
 ## 提供的选项
 
 ### strict_mode
@@ -136,7 +175,7 @@ strict_mode: True|False
 order: 数字
 ```
 
-数字必须是自然数，默认值是1。
+数字必须是大于1的自然数，默认值是1。
 
 ### excludes
 
@@ -201,48 +240,4 @@ includes: 列表
 在被`excludes`排除的文件或文件夹如果在`includes`选项中出现，那么会对其进行编号。默认值为空列表`[]`。
 
 **注意**：includes是作为excludes的辅助选项使用的（意味着必须和excludes一起使用，单独使用此选项没有意义）。
-
-
-
-## 安装
-有以下两种方法：
-### 从源码构建安装
-克隆此项目到你的计算机上，然后执行以下命令：
-
-```shell
-cd mkdocs-add-number-plugin
-mkdir wheels
-cd wheels
-# if you have installed the plugin
-# pip uninstall mkdocs-add-number-plugin -y
-pip wheel ..
-pip install mkdocs_add_number_plugin-*-py2-none-any.whl
-```
-
-### 使用 pip 安装
-
-```shell
-# if you have installed the plugin
-# pip uninstall mkdocs-add-number-plugin -y
-pip install mkdocs-add-number-plugin
-```
-
-
-
-## 使用
-
-在`mkdocs.yml`文件中的`plugins`选项添加此插件：
-
-```yaml
-plugins: 
-    - search
-    - add-number:
-        strict_mode: False
-        order: 1
-        excludes: 
-        	- sql/
-        	- command/rsync
-        includes:
-        	- sql/MySQL
-```
 
