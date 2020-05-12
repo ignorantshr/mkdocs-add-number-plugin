@@ -140,15 +140,18 @@ class AddNumberPlugin(BasePlugin):
 
         e.g.
         if number from h2, then the level is:
-        ## level 1
-        ### level 2
-        #### level 3
-        ### level 2
+        ## level=1
+        ### level=2
+        #### level=3
+        ### level=2
 
-        args num
-        |...||
-        v   vv
+         args
+        |...|
+        v   v
         ######
+             ^
+             |
+            num
 
         :param tmp_lines: line
         :param parent_nums_head: storage depth of header before this line.
@@ -163,33 +166,33 @@ class AddNumberPlugin(BasePlugin):
         
         nums_head = md.heading_depth(tmp_lines[startrow])
         parent_nums = parent_nums_head[len(parent_nums_head) - 1]
-        level_chang_num = nums_head - parent_nums
+        chang_num = nums_head - parent_nums
 
         # drop one level
-        if nums_head < parent_nums:
+        if chang_num < 0:
             if level != 1:
-                # for _ in range(level_chang_num):
+                # for _ in range(-chang_num):
                 num = args.pop()
             level -= 1
             parent_nums_head.pop()
             return self._ascent(tmp_lines, parent_nums_head, level, args, num, startrow)
 
         # sibling
-        if nums_head == parent_nums:
+        if chang_num == 0:
             num += 1
             tmp_lines[startrow] = self._replace_line(tmp_lines[startrow], '#' * nums_head + ' ',
-                                                     ('%d.' * (level - 1)) % tuple(args), num)
+                                                     '%d.' * len(args) % tuple(args), num)
             return self._ascent(tmp_lines, parent_nums_head, level, args, num, startrow + 1)
 
         # rise one level
         level += 1
         if level != 1:
-            # for _ in range(level_chang_num):
+            # for _ in range(chang_num):
             args.append(num)
         parent_nums_head.append(nums_head)
         num = 1
         tmp_lines[startrow] = self._replace_line(tmp_lines[startrow], '#' * nums_head + ' ',
-                                                 ('%d.' * (level - 1)) % tuple(args), num)
+                                                 '%d.' * len(args) % tuple(args), num)
         return self._ascent(tmp_lines, parent_nums_head, level, args, num, startrow + 1)
 
     def _replace_line(self, tmp_line, substr, prenum_str, nextnum):
