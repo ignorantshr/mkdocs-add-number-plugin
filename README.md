@@ -153,6 +153,7 @@ strict_mode: True|False
 
 **注意**：两种模式的标题级数都不能有倒序出现。比如`### title1\n# title2\n`，这会导致编号异常。并且每个标题后面都要有空格与文字隔开，比如这样`# title`是正确的，而这样`#title`是不行的。
 
+
 #### 效果
 
 非严格模式效果：
@@ -162,7 +163,6 @@ strict_mode: True|False
 严格模式效果：
 
 ![](img/strict_mode.png)
-
 
 
 ### order
@@ -176,6 +176,7 @@ order: 数字
 ```
 
 数字必须是大于1的自然数，默认值是1。
+
 
 ### excludes
 
@@ -192,7 +193,7 @@ excludes: 列表|'*'
 
 #### 例子
 
-比如现在有一mkdocs目录结构如下：
+比如现在有一 mkdocs 目录结构如下：
 
 ```shell
 $ tree .
@@ -226,7 +227,6 @@ plugins:
 ```
 
 
-
 ### includes
 
 包含某些文件或文件夹。
@@ -240,4 +240,46 @@ includes: 列表
 在被`excludes`排除的文件或文件夹如果在`includes`选项中出现，那么会对其进行编号。默认值为空列表`[]`。
 
 **注意**：includes是作为excludes的辅助选项使用的（意味着必须和excludes一起使用，单独使用此选项没有意义）。
+
+### increment_topnav
+
+对顶级目录索引进行编号。
+
+语法：
+
+```yaml
+increment_topnav: True|False
+```
+
+默认值为 True。
+**注意**：`includes`和`excludes`选项不会影响此选项。
+
+开启之后的效果：
+
+![](img/increment_topnav.png)
+
+
+### increment_pages
+
+对二级目录索引进行编号。
+
+语法：
+
+```yaml
+increment_pages: True|False
+```
+
+默认值为 True。
+**注意**：`includes`和`excludes`选项不会影响此选项。
+
+开启之后的效果：
+
+![](img/increment_pages.png)
+
+
+### increment_topnav 与 increment_pages 共用
+
+两者同时开启时会影响二级目录索引的编号效果：
+
+![](img/increment_topnavANDpags.png)
 

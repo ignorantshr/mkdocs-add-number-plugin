@@ -1,9 +1,11 @@
 # coding=utf-8
 import os
-# import logging
 
 from mkdocs.config import config_options
 from mkdocs.plugins import BasePlugin
+from mkdocs.structure.nav import Section
+from mkdocs.structure.pages import Page
+
 from .utils import flatten
 from . import markdown as md
 
@@ -11,18 +13,56 @@ from . import markdown as md
 class AddNumberPlugin(BasePlugin):
     config_scheme = (
         ('strict_mode', config_options.Type(bool, default=False)),
-        # ('increment_pages', config_options.Type(bool, default=True)),
+        ('increment_pages', config_options.Type(bool, default=True)),
+        ('increment_topnav', config_options.Type(bool, default=True)),
         ('excludes', config_options.Type(list, default=[])),
         ('includes', config_options.Type(list, default=[])),
         ('order', config_options.Type(int, default=1))
     )
-    
+
     def _check_config_params(self):
         set_parameters = self.config.keys()
         allowed_parameters = dict(self.config_scheme).keys()
         if set_parameters != allowed_parameters:
             unknown_parameters = [x for x in set_parameters if x not in allowed_parameters]
             raise AssertionError("Unknown parameter(s) set: %s" % ", ".join(unknown_parameters))
+
+    def on_nav(self, nav, config, files):
+        """
+        The nav event is called after the site navigation is created and
+        can be used to alter the site navigation.
+
+        See:
+        https://www.mkdocs.org/user-guide/plugins/#on_nav
+
+        :param nav:     global navigation object
+        :param config:  global configuration object
+        :param files:   global files collection
+        :return:        global navigation object
+        """
+        self._title2index = dict()
+        is_increment_topnav = self.config.get("increment_topnav", False)
+        is_increment_pages = self.config.get("increment_pages", False)
+
+        index = 0
+        while index < len(nav.items):
+            if is_increment_topnav:
+                nav.items[index].title = str(index+1) + '. ' + \
+                                         nav.items[index].title
+            # Section(title='Linux')
+            #       Page(title=[blank], url='/linux/epel%E6%BA%90/')
+            if type(nav.items[index]) == Section:
+                pages = nav.items[index].children
+                j = 0
+                while j < len(pages):
+                    if is_increment_topnav and is_increment_pages:
+                        self._title2index[pages[j].url] = \
+                            str(index + 1) + '.' + str(j + 1) + ' '
+                    elif is_increment_pages:
+                        self._title2index[pages[j].url] = str(j + 1) + '. '
+                    j += 1
+            index += 1
+        return nav
 
     def on_files(self, files, config):
         """
@@ -38,7 +78,6 @@ class AddNumberPlugin(BasePlugin):
         Returns:
             files (list): global files collection
         """
-
         self._check_config_params()
         
         # Use navigation if set, 
@@ -73,7 +112,7 @@ class AddNumberPlugin(BasePlugin):
         self.files_str = [file for file in files_str if file not in files_to_remove]
 
         return files
-        
+
     def on_page_markdown(self, markdown, page, config, files):
         """
         The page_markdown event is called after the page's markdown is loaded 
@@ -93,13 +132,17 @@ class AddNumberPlugin(BasePlugin):
         Returns:
             markdown (str): Markdown source text of page as string
         """
-        
+        if self.config.get('increment_pages', False):
+            index_str = self._title2index.get(page.url, None)
+            if index_str:
+                page.title = index_str + page.title
+
         if page.file.src_path not in self.files_str:
             return markdown
 
         lines = markdown.split('\n')
         heading_lines = md.headings(lines)
-        
+
         if len(heading_lines) <= self._order:
             return markdown
 
@@ -110,22 +153,6 @@ class AddNumberPlugin(BasePlugin):
         else:
             tmp_lines_values = self._ascent(tmp_lines_values, [0], 0, [], 1, self._order)
 
-        # if self.config.get('increment_pages', False):
-        #     # Throw warning if there is more than one heading at level 1
-        #     h1_lines = [x for x in heading_lines.values() if x.startswith("# ")]
-        #     # if len(h1_lines) > 1:
-        #     #     raise logging.warning("""Page %s contains more than one level 1 heading:\n\n%s
-        #     #                          Consider setting 'increment_pages' to False""" %
-        #     #                     (page.file.src_path, "\n".join(h1_lines)))
-        #
-        #     # Set chapter number
-        #     # because lists start at 0 and not 1
-        #     chapter_number = self.pages.index(page.file.src_path) + 1
-        #     tmp_lines_values = [
-        #         md.update_heading_chapter(l, chapter_number)
-        #         for l in tmp_lines_values
-        #     ]
-        
         # Replace these new lines.
         n = 0
         for key in heading_lines.keys():
