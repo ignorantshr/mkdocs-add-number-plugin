@@ -53,6 +53,9 @@ plugins:
 - `order`: Heading level to start counting (number). Default is `1`. Example use case: When you want to use the first title of a document as the title of a document and you don't want to number it, set it to `order: 2`.
 - `excludes`: Exclude certain files or folders in the `docs/` folder. Default is None. To exclude entire folders, append a slash (`folder/`).
 - `includes`: The syntax is similar to `excludes` and it meant to be used together. You could for example exclude an entire folder but include several files from that folder.
+- `increment_topnav`: Number top-level navigation.
+- `increment_pages`: Number secondary navigation.
+
 
 ### Example of using `excludes`
 
@@ -88,6 +91,45 @@ plugins:
          excludes:
          	- command/
 ```
+
+### Example of using `increment_topnav`
+
+Number top-level navigation :
+
+```yaml
+increment_topnav: True|False
+```
+
+The deault value is `True`.
+**note**: Both `includes` and `excludes` options don't affect this option.
+
+Effect after enabling:
+
+![](img/increment_topnav.png)
+
+
+### Example of using `increment_pages`
+
+Number secondary navigation :
+
+```yaml
+increment_pages: True|False
+```
+
+The deault value is `True`.
+**note**: Both `includes` and `excludes` options don't affect this option.
+
+Effect after enabling:
+
+![](img/increment_pages.png)
+
+
+### Example of using `increment_topnav `with `increment_pages`
+
+When both are turned on at the same time, the numbering effect of the secondary navigation is affected
+
+![](img/increment_topnavANDpags.png)
+
 
 ------ CHINESE VERSION ------
 
@@ -137,6 +179,13 @@ plugins:
 
 
 ## 提供的选项
+
+- `strict_mode`
+- `order`
+- `excludes`
+- `includes`
+- `increment_topnav`
+- `increment_pages`
 
 ### strict_mode
 
@@ -191,7 +240,7 @@ excludes: 列表|'*'
 - 列表：遵循`yaml`文件的列表语法，文件或文件夹填写`docs`文件夹下的相对路径，不必填写文件后缀。**以`/`或`\`结尾的值表示文件夹**。
 - '*'：表示排除所有的文件。因为默认值为空列表`[]`，意味着对所有的文件进行编号，所以你需要使用此值来不对所有的文件进行编号。
 
-#### 例子
+##### 例子
 
 比如现在有一 mkdocs 目录结构如下：
 

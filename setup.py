@@ -5,8 +5,9 @@ with open("README.md", "r") as fh:
 
 setup(
     name='mkdocs-add-number-plugin',
-    version='1.2.0',
-    description='MkDocs Plugin to automatically number the headings (h1-h6) in each markdown page.',
+    version='1.2.1',
+    description='MkDocs Plugin to automatically number the headings (h1-h6) '
+                'in each markdown page and number the nav.',
     long_description=long_description,
     long_description_content_type="text/markdown",
     keywords='mkdocs index add-number plugin',
