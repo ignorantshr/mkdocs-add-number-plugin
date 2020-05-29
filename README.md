@@ -6,14 +6,28 @@
 
 # mkdocs-add-number-plugin
 
-[MkDocs](https://www.mkdocs.org/) plugin to automatically number the headings (h1-h6) in each markdown page. This only affects your rendered HTML and does not affect the markdown files.
+[MkDocs](https://www.mkdocs.org/) plugin to automatically number the headings (h1-h6) in each markdown page and the nav. This only affects your rendered HTML and does not affect the markdown files.
 
 ## Setup
 
+### use pip3
 Install the plugin using pip3:
 
 ```bash
 pip3 install mkdocs-add-number-plugin
+```
+
+### build from source
+use git clone the source code to your computer and execute commands:
+
+```shell
+cd mkdocs-add-number-plugin
+mkdir wheels
+cd wheels
+# if you have installed the plugin, uninstall it.
+# pip3 uninstall mkdocs-add-number-plugin -y
+pip3 wheel ..
+pip3 install mkdocs_add_number_plugin-*-py3-none-any.whl
 ```
 
 Next, add the following lines to your `mkdocs.yml`:
@@ -138,7 +152,15 @@ When both are turned on at the same time, the numbering effect of the secondary 
 一个mkdocs插件：为你的每个页面的标题（h1~h6）自动编号。**这只影响你的html渲染结果，并不影响markdown文档本身！**
 
 ## 安装
-有以下两种方法：
+
+### 使用 pip 安装
+
+```shell
+# if you have installed the plugin, uninstall it.
+# pip3 uninstall mkdocs-add-number-plugin -y
+pip3 install mkdocs-add-number-plugin
+```
+
 ### 从源码构建安装
 克隆此项目到你的计算机上，然后执行以下命令：
 
@@ -146,18 +168,10 @@ When both are turned on at the same time, the numbering effect of the secondary 
 cd mkdocs-add-number-plugin
 mkdir wheels
 cd wheels
-# if you have installed the plugin
+# if you have installed the plugin, uninstall it.
 # pip3 uninstall mkdocs-add-number-plugin -y
 pip3 wheel ..
 pip3 install mkdocs_add_number_plugin-*-py3-none-any.whl
-```
-
-### 使用 pip 安装
-
-```shell
-# if you have installed the plugin
-# pip3 uninstall mkdocs-add-number-plugin -y
-pip3 install mkdocs-add-number-plugin
 ```
 
 ## 使用
