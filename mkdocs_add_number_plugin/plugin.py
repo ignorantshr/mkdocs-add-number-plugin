@@ -12,8 +12,8 @@ from . import markdown as md
 class AddNumberPlugin(BasePlugin):
     config_scheme = (
         ('strict_mode', config_options.Type(bool, default=False)),
-        ('increment_pages', config_options.Type(bool, default=True)),
-        ('increment_topnav', config_options.Type(bool, default=True)),
+        ('increment_pages', config_options.Type(bool, default=False)),
+        ('increment_topnav', config_options.Type(bool, default=False)),
         ('excludes', config_options.Type(list, default=[])),
         ('includes', config_options.Type(list, default=[])),
         ('order', config_options.Type(int, default=1))

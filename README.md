@@ -114,7 +114,7 @@ Number top-level navigation :
 increment_topnav: True|False
 ```
 
-The deault value is `True`.
+The deault value is `False`.
 **note**: Both `includes` and `excludes` options don't affect this option.
 
 Effect after enabling:
@@ -130,7 +130,7 @@ Number secondary navigation :
 increment_pages: True|False
 ```
 
-The deault value is `True`.
+The deault value is `False`.
 **note**: Both `includes` and `excludes` options don't affect this option.
 
 Effect after enabling:
@@ -314,7 +314,7 @@ includes: 列表
 increment_topnav: True|False
 ```
 
-默认值为 True。
+默认值为 False。
 **注意**：`includes`和`excludes`选项不会影响此选项。
 
 开启之后的效果：
@@ -332,7 +332,7 @@ increment_topnav: True|False
 increment_pages: True|False
 ```
 
-默认值为 True。
+默认值为 False。
 **注意**：`includes`和`excludes`选项不会影响此选项。
 
 开启之后的效果：
